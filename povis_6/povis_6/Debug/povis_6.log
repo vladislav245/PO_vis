@@ -1,0 +1,7 @@
+﻿  Book.cpp
+C:\Users\влад\source\repos\povis_6\povis_6\Book.h(110,1): error C2250: AD_Magazine: неоднозначное наследование "void Book::Output(void) const"
+C:\Users\влад\source\repos\povis_6\povis_6\Book.h(110,1): error C2250: AD_Magazine: неоднозначное наследование "void Book::Input(void)"
+  povis_6.cpp
+C:\Users\влад\source\repos\povis_6\povis_6\Book.h(110,1): error C2250: AD_Magazine: неоднозначное наследование "void Book::Output(void) const"
+C:\Users\влад\source\repos\povis_6\povis_6\Book.h(110,1): error C2250: AD_Magazine: неоднозначное наследование "void Book::Input(void)"
+  Создание кода...
