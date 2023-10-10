@@ -1,98 +1,113 @@
 ﻿#include <iostream>
+#include <algorithm>
+#include <vector>
 #include "class.h"
 
+using namespace std;
+
+bool empty(int* arr, int size) {
+	for (int i = 0; i < size; i++) {
+		if (arr[i] != 0) return 0;
+	}
+	return 1;
+}
+
+int* my_min(int* arr, int size) {
+	int* ptr = nullptr;
+
+	int min = 1000000;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] <= min) {
+			ptr = &arr[i];
+			min = arr[i];
+		}
+	}
+	return ptr;
+}
 
 int main()
 {
 
 	setlocale(LC_ALL, "RUS");
 	
-	//без параметров 
-	Book empty;
+	//массив времени
+	int* arr;
+	int size;
+
+	cout << "Введите кол-во работы" << endl;
+	cin >> size;
 	
-	//с параметрами
-	Book obj1("Pushkin");
+	arr = new int[size];
 
-	Book obj2("Tolstoy", "War and Peace", "Eksmo");
+	cout << "Время" << endl;
+	for (int i = 0; i < size; i++) {
+		cin >> arr[i];
+	}
 
-	Book obj3("Dostoevsky", "Crime and Punishment", "Rosmen", 1876);
+	std::sort(arr, arr + size);
 
-	Book arr_obj[3];
+	//рабочие
+	int k;
+	cout << "Введите кол-во работников" << endl;
+	cin >> k;
 
-	//1
-	while (true) {
-		char symbol;
+	int* res = new int[k] {0};
 
-		std::cout << "Выберете объект" << std::endl;
-		std::cout << "1 - пустой объект" << std::endl;
-		std::cout << "2 - объект с 1 параметром" << std::endl;
-		std::cout << "3 - объект с 3 параметрами" << std::endl;
-		std::cout << "4 - объект с 4 параметрами" << std::endl;
-		std::cout << "/ - закончить" << std::endl;
+	int mid = 0;
 
-		symbol = getchar();
-		getchar();
+	for (int i = 0; i < size; i++) {
+		mid += arr[i];
+	}
+	mid = std::ceil(float(mid) / k);
+	//макс время 1-ой работы
+	int max = mid;
 
-		if (symbol == '/') break;
+	cout << "СР ЗНАЧ = " << mid << endl;
 
-		std::cout << std::endl;
-
-		switch (symbol){
-		case '1':
-			empty.Input();
-			empty.draw_all_info();
-			break;
-		case '2':
-			obj1.Input();
-			obj1.draw_all_info();
-			break;
-		case '3':
-			obj2.Input();
-			obj2.draw_all_info();
-			break;
-		case '4':
-			obj3.Input();
-			obj3.draw_all_info();
-			break;
-		default:
-			std::cout << "Такого варианта нет" << std::endl;
+	//если есть работа больше средней по времени
+	int step = 0;
+	for (int i = 0; i < k; i++) {
+		for (int j = size - 1; j > -1; j--) {
+			if (arr[j] > max) {
+				max = arr[j];
+				res[i] = arr[j];
+				arr[j] = 0;
+				step++;
+			}
 		}
 	}
 
-	std::cout << std::endl << std::endl << "Заполняем массив" << std::endl;
-
-	while (true) {
-		char symbol;
-		int number;
-
-		std::cout << "Выберете номер объекта от 1 до 3" << std::endl;
-		std::cout << "4 - закончить" << std::endl;
-
-		std::cin >> number;
-		getchar();
-
-		if (number == 4) break;
-
-		number--;
-
-		if (number < 0 || number >= 3) {
-			std::cout << "Данного индекса нет" << std::endl;
-			continue;
+	for (int i = 0 + step; i < k; i++) {
+		for (int j = size - 1; j > -1; j--) {
+			if (res[i] + arr[j] <= max) {
+				res[i] += arr[j];
+				arr[j] = 0;
+			}
 		}
+	}
 
+	for (int i = 0; i < k; i++) {
+		cout << res[i] << endl;
+	}
 
-		std::cout << std::endl;
-		std::cout << "1 - Ввести данные\n2 - Вывести выбранные данные\n3 - Вывести все данные" << std::endl;
-
-		symbol = getchar();
-		getchar();
+	while (empty(arr, size) != 1) {
 		
-		if (symbol == '1') arr_obj[number].Input();
-		else if (symbol == '2') arr_obj[number].Output();
-		else if (symbol == '3') arr_obj[number].draw_all_info();
-		else std::cout << "Данного варианта нет" << std::endl;
+		int* ptr = my_min(res, k);
 
-		std::cout << std::endl;
+		for (int j = size - 1; j > -1; j--) {
+			if (*ptr + arr[j] > max) {
+				*ptr += arr[j];
+				max = *ptr;
+				arr[j] = 0;
+			}
+		}
 	}
 
+	cout << endl;
+
+	for (int i = 0; i < k; i++) {
+		cout << res[i] << endl;
+	}
+
+	return 0;
 }
