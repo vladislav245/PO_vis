@@ -1,0 +1,8 @@
+﻿  Book.cpp
+  my_struct.cpp
+  povis_8.cpp
+C:\Users\влад\source\repos\povis_8\povis_8\povis_8.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\влад\source\repos\povis_8\povis_8\povis_8.cpp(3,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+  Создание кода...
+C:\Users\влад\source\repos\povis_8\povis_8\my_struct.cpp(32): warning C4715: Stack::Pop: значение возвращается не при всех путях выполнения
+  povis_8.vcxproj -> C:\Users\влад\source\repos\povis_8\Debug\povis_8.exe
